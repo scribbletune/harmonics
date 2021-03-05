@@ -1,7 +1,7 @@
 {
   "name": "harmonics",
   "version": "1.0.0",
-  "description": "Tools and utilities for generic representation of scales, chords, progressions etc. Uses tonal for western classical and custom generators for other forms of music.",
+  "description": "Tools and utilities for a generic representation of scales, chords, progressions etc. for use in music software, music related web & mobile apps, VST/VCV plugins and Max for Live devices.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,9 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/scribbletune/harmonics.git"
   },
-  "keywords": [],
+  "keywords": ["music", "scales", "chords", "progressions", "scribbletune", "music theory"],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/scribbletune/harmonics/issues"
   },
