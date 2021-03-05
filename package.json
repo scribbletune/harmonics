@@ -10,7 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/scribbletune/harmonics.git"
   },
-  "keywords": ["music", "scales", "chords", "progressions", "scribbletune", "music theory"],
+  "keywords": [
+    "music",
+    "scales",
+    "chords",
+    "progressions",
+    "scribbletune",
+    "music theory"
+  ],
   "author": "",
   "license": "MIT",
   "bugs": {
@@ -19,5 +26,8 @@
   "homepage": "https://github.com/scribbletune/harmonics#readme",
   "devDependencies": {
     "tonal": "^2.2.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
