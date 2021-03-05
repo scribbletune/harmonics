@@ -1,5 +1,5 @@
 {
-  "name": "solfege",
+  "name": "harmonics",
   "version": "1.0.0",
   "description": "Tools and utilities for generic representation of scales, chords, progressions etc. Uses tonal for western classical and custom generators for other forms of music.",
   "main": "index.js",
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/scribbletune/solfege.git"
+    "url": "git+https://github.com/scribbletune/harmonics.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/scribbletune/solfege/issues"
+    "url": "https://github.com/scribbletune/harmonics/issues"
   },
-  "homepage": "https://github.com/scribbletune/solfege#readme",
+  "homepage": "https://github.com/scribbletune/harmonics#readme",
   "devDependencies": {
     "tonal": "^2.2.2"
   }
