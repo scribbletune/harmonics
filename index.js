@@ -1,1 +1,0 @@
-console.log('Harmonics is a set of tools and utilities for a generic representation of scales, chords, progressions etc. for use in music software, music related web & mobile apps, VST/VCV plugins and Max for Live devices. COMING SOON!');

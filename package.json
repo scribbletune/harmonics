@@ -25,9 +25,10 @@
   },
   "homepage": "https://github.com/scribbletune/harmonics#readme",
   "devDependencies": {
-    "tonal": "^2.2.2"
+    "@tonaljs/tonal": "^4.6.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "dependencies": {}
 }
