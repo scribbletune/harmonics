@@ -4,7 +4,7 @@
   "description": "Tools and utilities for a generic representation of scales, chords, progressions etc. for use in music software, music related web & mobile apps, VST/VCV plugins and Max for Live devices.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/scribbletune/harmonics#readme",
   "devDependencies": {
-    "@tonaljs/tonal": "^4.6.0"
+    "@tonaljs/tonal": "^4.6.0",
+    "jest": "^26.6.3"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
