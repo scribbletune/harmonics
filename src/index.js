@@ -1,3 +1,3 @@
-import { chords, scales, chord, scale } from "./scalesAndChords";
+import { chords, scales, chord, inlineChord, scale } from './scalesAndChords';
 
-export { chords, scales, chord, scale };
+export { chords, scales, chord, inlineChord, scale };
