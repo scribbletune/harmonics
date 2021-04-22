@@ -100,6 +100,9 @@ export const inlineChord = (rootChord_Oct) => {
 
   if (rootChord_Oct.includes('_')) {
     octave = +rootChord_Oct.split('_')[1];
+    // since chord was originally set by simply removing the root
+    // it can still have a _ and the octave dangling in case of an inlineChord
+    chord = chord.slice(0, chord.indexOf('_'));
   }
 
   return _getNotesForScaleOrChord({ chord: root + octave + ' ' + chord });

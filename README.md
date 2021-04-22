@@ -13,13 +13,13 @@ npm install harmonics
 Use `harmonics` in your project
 
 ```javascript
-const harmonics = require('harmonics'); // ['ionian', 'dorian', 'lydian', '...']
+const harmonics = require('harmonics');
 ```
 
 Get an `array` of commonly used scales exported from Tonal
 
 ```javascript
-harmonics.scales();
+harmonics.scales(); // ['ionian', 'dorian', 'lydian', '...']
 ```
 
 Get the notes of a scale as an `array`
