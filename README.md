@@ -45,3 +45,10 @@ Get the notes of a chord as an `array` for a specific octave
 ```javascript
 harmonics.chord('C5 M'); // ['C5', 'E5', 'G5']
 ```
+
+Get the notes of an "inline" chord such as CM or Cmaj7 or Dbsus4_6 (here 6 is the octave). This is used in Scribbletune where you can define a bunch of notes and use chords in between, e.g 'C4 E4 Csus2 G4' (here Csus2 is "inlined" with C4, E4 and G4)
+
+```javascript
+harmonics.inlineChord('CM'); // ['C4', 'E4', 'G4']
+harmonics.inlineChord('CM_5'); // ['C5', 'E5', 'G5']
+```

@@ -37,9 +37,9 @@ const getChromatic = (root, octave) => {
 
 const _getNotesForScaleOrChord = ({ scale, chord }) => {
   const rootOctaveScale = scale || chord;
-  const NOTES_TYPE = scale ? 'scale' : 'chord';
+  const SCALE_OR_CHORD = scale ? 'scale' : 'chord';
   if (typeof rootOctaveScale !== 'string') {
-    throw `${rootOctaveScale} is not a valid input for ${NOTES_TYPE}`;
+    throw `${rootOctaveScale} is not a valid input for ${SCALE_OR_CHORD}`;
   }
   const indexOfFirstSpace = rootOctaveScale.indexOf(' ');
   const scaleOrChord = rootOctaveScale.slice(indexOfFirstSpace + 1);
@@ -52,7 +52,7 @@ const _getNotesForScaleOrChord = ({ scale, chord }) => {
   }
 
   if (!scaleMaps[scaleOrChord] && !chordMaps[scaleOrChord]) {
-    throw `${rootOctaveScale} is not a valid ${NOTES_TYPE}`;
+    throw `${rootOctaveScale} is not a valid ${SCALE_OR_CHORD}`;
   }
   const chroma = getChromatic(root, octave);
   const acc = [];
@@ -70,6 +70,39 @@ const _getNotesForScaleOrChord = ({ scale, chord }) => {
   }
 
   return acc;
+};
+
+/**
+ *
+ * @param {String} rootChord_Oct e.g. CM or CM_5 Fmaj7 or Dbb9sus or Db9sus
+ * @returns Array
+ * Take an inline chord such as CM or Csus4_3 and return an array of it's notes
+ * Used in Scribbletune to allow adding chords inline with notes
+ */
+export const inlineChord = (rootChord_Oct) => {
+  // only b9sus is a chord that starts with a `b` which can be confused with a flat
+  // hence isolate it explicitly
+  const B9SUS = 'b9sus';
+  let root,
+    chord,
+    octave = 4;
+  if (rootChord_Oct.includes(B9SUS)) {
+    chord = B9SUS;
+    root = rootChord_Oct.slice(0, rootChord_Oct.indexOf(B9SUS));
+  } else {
+    root = rootChord_Oct[0];
+    chord = rootChord_Oct.slice(1);
+    if (rootChord_Oct[1] === 'b' || rootChord_Oct[1] === '#') {
+      root += rootChord_Oct[1];
+      chord = rootChord_Oct.slice(2);
+    }
+  }
+
+  if (rootChord_Oct.includes('_')) {
+    octave = +rootChord_Oct.split('_')[1];
+  }
+
+  return _getNotesForScaleOrChord({ chord: root + octave + ' ' + chord });
 };
 
 export const chords = () => Object.keys(chordMaps);
