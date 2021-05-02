@@ -29,6 +29,16 @@ test('returns the notes of a scale if available', () => {
     'Bb4',
   ]);
 
+  expect(scalesAndChords.scale('C4 lydian')).toStrictEqual([
+    'C4',
+    'D4',
+    'E4',
+    'Gb4',
+    'G4',
+    'A4',
+    'B4',
+  ]);
+
   expect(scalesAndChords.scale('C5 minor')).toStrictEqual([
     'C5',
     'D5',
