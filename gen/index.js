@@ -1,5 +1,5 @@
 /**
- * Tooling to generate simplified scale and chord map JSON files from tonal
+ * Tooling to generate simplified scale and chord map JSON files from tonal's chroma prop
  * These are to be consumed by the exported Node module
  */
 
@@ -14,30 +14,13 @@ const { Scale, Chord, ChordType } = require('@tonaljs/tonal');
  * to be skipped while traversing notes from a chromatic scale
  */
 const getBitmap = ({ scale, chord }) => {
-  const chromatic = Scale.get('C4 chromatic').notes.concat(
-    Scale.get('C5 chromatic')
-  );
-  let mode;
+  let tonalObject;
 
-  if (scale) mode = Scale.get(`C4 ${scale}`).notes;
-  else if (chord) mode = Chord.getChord(chord, 'C4').notes;
+  if (scale) tonalObject = Scale.get(`C4 ${scale}`);
+  else if (chord) tonalObject = Chord.getChord(chord, 'C4');
   else throw 'No scale or chord provided';
 
-  let i = 0,
-    j = 0;
-  let bitmap = '';
-
-  while (i < chromatic.length) {
-    if (chromatic[i] === mode[j]) {
-      bitmap += '1';
-      j++;
-    } else {
-      bitmap += '0';
-    }
-    i++;
-  }
-
-  return bitmap;
+  return tonalObject.chroma;
 };
 
 // Genarate JSON file for scaleMaps
