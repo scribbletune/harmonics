@@ -55,7 +55,7 @@ const _getNotesForScaleOrChord = ({ scale, chord }) => {
   const indexOfFirstSpace = rootOctaveScale.indexOf(' ');
   const scaleOrChord = rootOctaveScale.slice(indexOfFirstSpace + 1);
   const rootOctave = rootOctaveScale.slice(0, indexOfFirstSpace);
-  const root = sharpToFlat(rootOctave.replace(/\d/g, ''));
+  const root = sharpToFlat(rootOctave.replace(/\d/g, '').toUpperCase());
   const octave = +rootOctave.replace(/\D/g, '');
 
   if (isNaN(octave)) {
