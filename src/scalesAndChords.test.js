@@ -70,6 +70,20 @@ test('returns the notes of a scale if available', () => {
   ]);
 });
 
+test('accepts sharps', () => {
+  expect(scalesAndChords.scale('C#4 major')).toStrictEqual([
+    'Db4',
+    'Eb4',
+    'F4',
+    'Gb4',
+    'Ab4',
+    'Bb4',
+    'C5',
+  ]);
+
+  expect(scalesAndChords.chord('C#4 M')).toStrictEqual(['Db4', 'F4', 'Ab4']);
+});
+
 test('returns the notes of a chord if available', () => {
   expect(scalesAndChords.chord('C4 M')).toStrictEqual(['C4', 'E4', 'G4']);
   expect(scalesAndChords.chord('C5 M')).toStrictEqual(['C5', 'E5', 'G5']);
