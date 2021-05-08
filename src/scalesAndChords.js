@@ -1,6 +1,17 @@
 const scaleMaps = require('../gen/scaleMaps.json');
 const chordMaps = require('../gen/chordMaps.json');
 
+const sharpToFlat = (root) => {
+  const o = {
+    'C#': 'Db',
+    'D#': 'Eb',
+    'F#': 'Gb',
+    'G#': 'Ab',
+    'A#': 'Bb',
+  };
+  return o[root] ? o[root] : root;
+};
+
 const getChromatic = (root, octave) => {
   const o1 = [
     'C',
@@ -44,7 +55,7 @@ const _getNotesForScaleOrChord = ({ scale, chord }) => {
   const indexOfFirstSpace = rootOctaveScale.indexOf(' ');
   const scaleOrChord = rootOctaveScale.slice(indexOfFirstSpace + 1);
   const rootOctave = rootOctaveScale.slice(0, indexOfFirstSpace);
-  const root = rootOctave.replace(/\d/g, '');
+  const root = sharpToFlat(rootOctave.replace(/\d/g, ''));
   const octave = +rootOctave.replace(/\D/g, '');
 
   if (isNaN(octave)) {
