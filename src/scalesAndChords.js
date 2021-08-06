@@ -1,7 +1,10 @@
 const scaleMaps = require('../gen/scaleMaps.json');
 const chordMaps = require('../gen/chordMaps.json');
 
+const DEFAULT_OCTAVE = 4;
+
 const sharpToFlat = (root) => {
+  // Also capitalize 1st letter
   const o = {
     'C#': 'Db',
     'D#': 'Eb',
@@ -9,11 +12,11 @@ const sharpToFlat = (root) => {
     'G#': 'Ab',
     'A#': 'Bb',
   };
-  return o[root] ? o[root] : root;
+  return o[root.toUpperCase()] || (root.charAt(0).toUpperCase() + root.slice(1));
 };
 
 const getChromatic = (root, octave) => {
-  const o1 = [
+  const o = [
     'C',
     'Db',
     'D',
@@ -26,21 +29,9 @@ const getChromatic = (root, octave) => {
     'A',
     'Bb',
     'B',
-  ].map((n) => n + octave);
-  const o2 = [
-    'C',
-    'Db',
-    'D',
-    'Eb',
-    'E',
-    'F',
-    'Gb',
-    'G',
-    'Ab',
-    'A',
-    'Bb',
-    'B',
-  ].map((n) => n + (octave + 1));
+  ];
+  const o1 = o.map((n) => n + octave);
+  const o2 = o.map((n) => n + (octave + 1));
 
   const c = o1.concat(o2);
   return c.slice(c.indexOf(root + octave));
@@ -53,10 +44,23 @@ const _getNotesForScaleOrChord = ({ scale, chord }) => {
     throw `${rootOctaveScale} is not a valid input for ${SCALE_OR_CHORD}`;
   }
   const indexOfFirstSpace = rootOctaveScale.indexOf(' ');
-  const scaleOrChord = rootOctaveScale.slice(indexOfFirstSpace + 1);
-  const rootOctave = rootOctaveScale.slice(0, indexOfFirstSpace);
-  const root = sharpToFlat(rootOctave.replace(/\d/g, '').toUpperCase());
-  const octave = +rootOctave.replace(/\D/g, '');
+  let scaleOrChord;
+  let rootOctave;
+  if (indexOfFirstSpace === -1) {
+    scaleOrChord = rootOctaveScale.slice(1);
+    rootOctave = rootOctaveScale[0];
+
+    if (rootOctaveScale[1] === 'b' || rootOctaveScale[1] === '#') {
+      scaleOrChord = rootOctaveScale.slice(2);
+      rootOctave += rootOctaveScale[1];
+    }
+  } else {
+    scaleOrChord = rootOctaveScale.slice( (indexOfFirstSpace === -1) ? 1 : (indexOfFirstSpace + 1) );
+    rootOctave = rootOctaveScale.slice(0, indexOfFirstSpace);
+  }
+  const root = sharpToFlat(rootOctave.replace(/\d/g, ''));
+  const octaveNumber = rootOctave.replace(/\D/g, '');
+  const octave = octaveNumber !== '' ? +rootOctave.replace(/\D/g, '') : DEFAULT_OCTAVE;
 
   if (isNaN(octave)) {
     throw `${rootOctave[0]} does not have a valid octave`;
@@ -96,7 +100,7 @@ export const inlineChord = (rootChord_Oct) => {
   const B9SUS = 'b9sus';
   let root,
     chord,
-    octave = 4;
+    octave = DEFAULT_OCTAVE;
   if (rootChord_Oct.includes(B9SUS)) {
     chord = B9SUS;
     root = rootChord_Oct.slice(0, rootChord_Oct.indexOf(B9SUS));
