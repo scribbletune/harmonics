@@ -112,6 +112,12 @@ test('returns the notes of a chord if available', () => {
     'G5',
     'B5',
   ]);
+  expect(scalesAndChords.chord('Db6 M')).toStrictEqual(['Db6', 'F6', 'Ab6']);
+  expect(scalesAndChords.chord('Ab m')).toStrictEqual(['Ab4', 'B4', 'Eb5']); // DEFAULT_CORD
+});
+
+test('returns the notes of a chord with inline notation if available', () => {
+  expect(scalesAndChords.chord('C#M')).toStrictEqual(['Db4', 'F4', 'Ab4']); // DEFAULT_CORD
 });
 
 test('returns the notes for an inline chord if available', () => {
