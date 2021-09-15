@@ -41,7 +41,7 @@ const _getNotesForScaleOrChord = ({ scale, chord }) => {
   const rootOctaveScale = scale || chord;
   const SCALE_OR_CHORD = scale ? 'scale' : 'chord';
   if (typeof rootOctaveScale !== 'string') {
-    throw `${rootOctaveScale} is not a valid input for ${SCALE_OR_CHORD}`;
+    throw new Error(`${rootOctaveScale} is not a valid input for ${SCALE_OR_CHORD}`);
   }
   const indexOfFirstSpace = rootOctaveScale.indexOf(' ');
   let scaleOrChord;
@@ -63,11 +63,11 @@ const _getNotesForScaleOrChord = ({ scale, chord }) => {
   const octave = octaveNumber !== '' ? +rootOctave.replace(/\D/g, '') : DEFAULT_OCTAVE;
 
   if (isNaN(octave)) {
-    throw `${rootOctave[0]} does not have a valid octave`;
+    throw new Error(`${rootOctave[0]} does not have a valid octave`);
   }
 
   if (!scaleMaps[scaleOrChord] && !chordMaps[scaleOrChord]) {
-    throw `${rootOctaveScale} is not a valid ${SCALE_OR_CHORD}`;
+    throw new Error(`${rootOctaveScale} is not a valid ${SCALE_OR_CHORD}`);
   }
   const chroma = getChromatic(root, octave);
   const acc = [];
