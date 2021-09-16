@@ -7,7 +7,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "build": "webpack --mode=production",
-    "watch:browser": "webpack --watch --mode=development"
+    "watch:browser": "webpack --watch --mode=development",
+    "bump-major": "npm version major --no-git-tag-version",
+    "bump-minor": "npm version minor --no-git-tag-version",
+    "bump-patch": "npm version patch --no-git-tag-version"
   },
   "dependencies": {},
   "devDependencies": {
