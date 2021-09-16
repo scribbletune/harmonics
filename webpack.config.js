@@ -5,6 +5,9 @@ module.exports = {
     path: __dirname,
     libraryTarget: 'commonjs',
   },
+
+  devtool: 'source-map',
+
   module: {
     rules: [
       {

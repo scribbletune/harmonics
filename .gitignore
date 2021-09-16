@@ -104,3 +104,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Build outputs
+main.js
+main.js.map
