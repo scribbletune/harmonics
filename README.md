@@ -4,7 +4,7 @@ Tools and utilities for a generic representation of scales, chords, progressions
 
 ## Install
 
-```
+```bash
 npm install harmonics
 ```
 
