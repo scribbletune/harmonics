@@ -5,6 +5,8 @@
 
 const fs = require('fs');
 const { Scale, Chord, ChordType } = require('@tonaljs/tonal');
+const svara = require('./svara.json');
+const melakarta = require('./melakarta.json');
 
 /**
  *
@@ -31,6 +33,30 @@ Scale.names().forEach((scale) => {
 
 scaleMaps['ionian'] = scaleMaps['major'];
 scaleMaps['minor'] = scaleMaps['aeolian'];
+
+// Append the melakarta ragas to scaleMaps
+Object.keys(melakarta).forEach(m => {
+  // console.log(m); // top level category of the ragas (for eg Indu)
+  Object.keys(melakarta[m]).forEach(r => {
+      // r is the actual raga (for eg Kanakangi)
+      const nums = melakarta[m][r].split(' ').map(n => svara[n]);
+      
+      let bitmap = '';
+      let pointer = 0;
+
+      // walk over 12 semitones to derive bitmap
+      for (let i = 0; i < 12; i++) {
+          if (i === nums[pointer]) {
+              bitmap = bitmap + '1';
+              pointer++;
+          } else {
+              bitmap = bitmap + '0';
+          }
+      }
+
+      scaleMaps[r] = bitmap;
+  })
+});
 
 fs.writeFile('./gen/scaleMaps.json', JSON.stringify(scaleMaps), function (err) {
   if (err) return console.log(err);
