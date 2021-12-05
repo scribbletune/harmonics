@@ -127,3 +127,21 @@ export const chords = () => Object.keys(chordMaps);
 export const scales = () => Object.keys(scaleMaps);
 export const chord = (chord) => _getNotesForScaleOrChord({ chord });
 export const scale = (scale) => _getNotesForScaleOrChord({ scale });
+
+/**
+ * 
+ * @param {String} scaleOrBitmap e.g '110010110011' or 'phrygian'
+ * @returns {Array} e.g. [0, 1,  3,  5, 7, 8, 10, 12]
+ */
+export const getIndicesFromScale = (scaleOrBitmap) => {
+  let str = scaleMaps[scaleOrBitmap] || scaleOrBitmap;
+  const intervals = [];
+	for (let i = 0; i < str.length; i++) {
+		if (str[i] === '1') {
+			intervals.push(i);
+		}
+	}
+
+	intervals.push(12); // Add the next octave
+	return intervals;
+};
