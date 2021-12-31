@@ -16,16 +16,22 @@ Use `harmonics` in your project
 const harmonics = require('harmonics');
 ```
 
-Get an `array` of commonly used scales exported from Tonal
+Get an `array` of all the scales available in harmonics (includes the one's from Tonal and the [Melakarta ragas](https://en.wikipedia.org/wiki/Melakarta)).
 
 ```javascript
-harmonics.scales(); // ['ionian', 'dorian', 'lydian', '...']
+harmonics.scales(); // ['ionian', 'dorian', 'lydian', '...', 'Kanakangi', 'Ratnangi', '...']
 ```
 
 Get the notes of a scale as an `array`
 
 ```javascript
 harmonics.scale('C4 major'); // ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']
+```
+
+Scales available from Tonal are lower cased while ragas have their first letter capitalized.
+
+```javascript
+harmonics.scale('C4 Kanakangi'); // ['C4', 'Db4', 'D4', 'F4', 'G4', 'Ab4', 'A4']
 ```
 
 Get an `array` of all the available chords (with numeric chords such as `4`, `5`, `7` etc exposed as `4th`, `5th`, `7th`)
@@ -51,4 +57,11 @@ Get the notes of an "inline" chord such as CM or Cmaj7 or Dbsus4_6 (here 6 is th
 ```javascript
 harmonics.inlineChord('CM'); // ['C4', 'E4', 'G4']
 harmonics.inlineChord('CM_5'); // ['C5', 'E5', 'G5']
+```
+
+Get the indices of a scale/raga or bitmap
+
+```javascript
+harmonics.getIndicesFromScale('phrygian'); // [0, 1,  3,  5, 7, 8, 10, 12]
+harmonics.inlineChord('110010110011'); // [0, 1,  3,  5, 7, 8, 10, 12]
 ```
