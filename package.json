@@ -1,6 +1,6 @@
 {
   "name": "harmonics",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Tools and utilities for a generic representation of scales, chords, progressions etc. for use in music software, music related web & mobile apps, VST/VCV plugins and Max for Live devices.",
   "main": "main.js",
   "scripts": {
