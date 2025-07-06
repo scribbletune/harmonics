@@ -108,3 +108,6 @@ dist
 # Build outputs
 main.js
 main.js.map
+
+# Ignore local npm configuration to avoid accidentally committing auth tokens
+.npmrc
