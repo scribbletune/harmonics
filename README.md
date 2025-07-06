@@ -1,6 +1,26 @@
 # Harmonics
 
-Tools and utilities for a generic representation of scales, chords, progressions etc. for use in music software, music related web & mobile apps, [scribbletune](https://scribbletune.com), [VCV Rack](https://vcvrack.com/) plugins and [Max for Live](https://www.ableton.com/en/live/max-for-live/) devices. Uses [tonal](https://github.com/tonaljs/tonal) for western classical and custom generators for other forms of music.
+Harmonics is a small node module that contains utility functions for working with musical scales and chords. The library exposes lists of available scales and chords along with helpers to retrieve notes, parse inline chord notation and compute scale intervals. The scale and chord data is generated using [tonal](https://github.com/tonaljs/tonal) and additional sources such as the [Melakarta ragas](https://en.wikipedia.org/wiki/Melakarta).
+
+## Project Structure
+
+```
+harmonics/
+├── src/                # Library source files
+│   ├── index.js        # Exports library functions
+│   ├── scalesAndChords.js  # Core logic for chords & scales
+│   └── scalesAndChords.test.js  # Jest tests
+├── gen/                # Generated data and generator script
+│   ├── chordMaps.json
+│   ├── scaleMaps.json
+│   ├── melakarta.json
+│   ├── svara.json
+│   └── index.js        # Script to generate JSON maps
+├── package.json        # NPM configuration
+├── babel.config.js
+├── webpack.config.js
+└── README.md
+```
 
 ## Install
 
@@ -66,9 +86,41 @@ harmonics.getIndicesFromScale('phrygian'); // [0, 1,  3,  5, 7, 8, 10, 12]
 harmonics.getIndicesFromScale('110010110011'); // [0, 1,  3,  5, 7, 8, 10, 12]
 ```
 
-## Security
+## Development
 
-Earlier versions of this repository accidentally committed a local
-`.npmrc` file containing an authentication token. The file has since been
-removed and the token revoked. To prevent similar issues, any local
-`.npmrc` should remain untracked by Git.
+Install dependencies and run tests:
+
+```bash
+npm install
+npm test
+```
+
+Build the browser bundle:
+
+```bash
+npm run build
+```
+
+For continuous browser builds during development:
+
+```bash
+npm run watch:browser
+```
+
+Run the tests in watch mode:
+
+```bash
+npm run test:watch
+```
+
+To regenerate the scale and chord data run:
+
+```bash
+node gen/index.js
+```
+
+## Further Learning
+
+- Explore the JSON maps under `gen/` to understand how scales and chords are represented.
+- Look at `src/scalesAndChords.js` for the core logic behind the exported functions.
+- Modify `gen/index.js` if you wish to add or update scale and chord definitions.
