@@ -84,6 +84,18 @@ test('accepts sharps', () => {
   expect(scalesAndChords.chord('C#4 M')).toStrictEqual(['Db4', 'F4', 'Ab4']);
 });
 
+test('handles flats such as Cb correctly', () => {
+  expect(scalesAndChords.scale('Cb4 major')).toStrictEqual([
+    'B4',
+    'Db5',
+    'Eb5',
+    'E5',
+    'Gb5',
+    'Ab5',
+    'Bb5',
+  ]);
+});
+
 test('accepts lowercase note name', () => {
   expect(scalesAndChords.scale('c5 phrygian')).toStrictEqual([
     'C5',
