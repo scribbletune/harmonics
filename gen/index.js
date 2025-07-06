@@ -25,7 +25,7 @@ const getBitmap = ({ scale, chord }) => {
   return tonalObject.chroma;
 };
 
-// Genarate JSON file for scaleMaps
+// Generate JSON file for scaleMaps
 const scaleMaps = {};
 Scale.names().forEach((scale) => {
   scaleMaps[scale] = getBitmap({ scale });
@@ -63,7 +63,7 @@ fs.writeFile('./gen/scaleMaps.json', JSON.stringify(scaleMaps), function (err) {
   console.log('Generated scaleMaps.json');
 });
 
-// Genarate JSON file for chordMaps
+// Generate JSON file for chordMaps
 const numChords = ['4', '5', '6', '7', '9', '11', '13'];
 const chordMaps = {};
 ChordType.symbols().forEach((chord) => {
