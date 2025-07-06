@@ -143,6 +143,25 @@ test('returns the notes for an inline chord if available', () => {
   ]);
 });
 
+test('trims trailing spaces in scale and chord input', () => {
+  expect(scalesAndChords.scale('C4 major ')).toStrictEqual([
+    'C4',
+    'D4',
+    'E4',
+    'F4',
+    'G4',
+    'A4',
+    'B4',
+  ]);
+
+  expect(scalesAndChords.chord('C5 maj7 ')).toStrictEqual([
+    'C5',
+    'E5',
+    'G5',
+    'B5',
+  ]);
+});
+
 test('returns the indices of the given scale by it s name or it s bitmap', () => {
   expect(scalesAndChords.getIndicesFromScale('phrygian')).toStrictEqual([0, 1,  3,  5, 7, 8, 10, 12]);
   expect(scalesAndChords.getIndicesFromScale('110101011010')).toStrictEqual([0, 1,  3,  5, 7, 8, 10, 12]);
