@@ -63,7 +63,7 @@ Get the indices of a scale/raga or bitmap
 
 ```javascript
 harmonics.getIndicesFromScale('phrygian'); // [0, 1,  3,  5, 7, 8, 10, 12]
-harmonics.inlineChord('110010110011'); // [0, 1,  3,  5, 7, 8, 10, 12]
+harmonics.getIndicesFromScale('110010110011'); // [0, 1,  3,  5, 7, 8, 10, 12]
 ```
 
 ## Security
