@@ -19,26 +19,31 @@ const sharpToFlat = (root) => {
   return o[root.toUpperCase()] || (root.charAt(0).toUpperCase() + root.slice(1));
 };
 
+const CHROMATIC = [
+  'C',
+  'Db',
+  'D',
+  'Eb',
+  'E',
+  'F',
+  'Gb',
+  'G',
+  'Ab',
+  'A',
+  'Bb',
+  'B',
+];
+
 const getChromatic = (root, octave) => {
-  const o = [
-    'C',
-    'Db',
-    'D',
-    'Eb',
-    'E',
-    'F',
-    'Gb',
-    'G',
-    'Ab',
-    'A',
-    'Bb',
-    'B',
-  ];
-  const o1 = o.map((n) => n + octave);
-  const o2 = o.map((n) => n + (octave + 1));
+  const index = CHROMATIC.indexOf(root);
+  if (index === -1) {
+    throw new Error(`${root} is not a valid root note`);
+  }
+  const o1 = CHROMATIC.map((n) => n + octave);
+  const o2 = CHROMATIC.map((n) => n + (octave + 1));
 
   const c = o1.concat(o2);
-  return c.slice(c.indexOf(root + octave));
+  return c.slice(index);
 };
 
 const _getNotesForScaleOrChord = ({ scale, chord }) => {
