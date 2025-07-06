@@ -166,3 +166,11 @@ test('returns the indices of the given scale by it s name or it s bitmap', () =>
   expect(scalesAndChords.getIndicesFromScale('phrygian')).toStrictEqual([0, 1,  3,  5, 7, 8, 10, 12]);
   expect(scalesAndChords.getIndicesFromScale('110101011010')).toStrictEqual([0, 1,  3,  5, 7, 8, 10, 12]);
 });
+
+test('throws an error for an invalid scale', () => {
+  expect(() => scalesAndChords.scale('C4 bogus')).toThrow();
+});
+
+test('throws an error for an invalid chord', () => {
+  expect(() => scalesAndChords.chord('H# M')).toThrow();
+});
