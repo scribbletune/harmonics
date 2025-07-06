@@ -42,11 +42,12 @@ const getChromatic = (root, octave) => {
 };
 
 const _getNotesForScaleOrChord = ({ scale, chord }) => {
-  const rootOctaveScale = scale || chord;
+  const input = scale || chord;
   const SCALE_OR_CHORD = scale ? 'scale' : 'chord';
-  if (typeof rootOctaveScale !== 'string') {
-    throw new Error(`${rootOctaveScale} is not a valid input for ${SCALE_OR_CHORD}`);
+  if (typeof input !== 'string') {
+    throw new Error(`${input} is not a valid input for ${SCALE_OR_CHORD}`);
   }
+  const rootOctaveScale = input.trim();
   const indexOfFirstSpace = rootOctaveScale.indexOf(' ');
   let scaleOrChord;
   let rootOctave;
