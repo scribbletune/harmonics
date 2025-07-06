@@ -11,6 +11,10 @@ const sharpToFlat = (root) => {
     'F#': 'Gb',
     'G#': 'Ab',
     'A#': 'Bb',
+    'CB': 'B',
+    'FB': 'E',
+    'E#': 'F',
+    'B#': 'C',
   };
   return o[root.toUpperCase()] || (root.charAt(0).toUpperCase() + root.slice(1));
 };
