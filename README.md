@@ -65,3 +65,10 @@ Get the indices of a scale/raga or bitmap
 harmonics.getIndicesFromScale('phrygian'); // [0, 1,  3,  5, 7, 8, 10, 12]
 harmonics.inlineChord('110010110011'); // [0, 1,  3,  5, 7, 8, 10, 12]
 ```
+
+## Security
+
+Earlier versions of this repository accidentally committed a local
+`.npmrc` file containing an authentication token. The file has since been
+removed and the token revoked. To prevent similar issues, any local
+`.npmrc` should remain untracked by Git.
