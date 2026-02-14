@@ -3,7 +3,13 @@ import { scales, chords, scale, chord, inlineChord, getIndicesFromScale } from '
 
 describe('scales', () => {
   it('returns a list of available scales', () => {
-    expect(Array.isArray(scales())).toBe(true);
+    const s = scales();
+    expect(Array.isArray(s)).toBe(true);
+    expect(s.length).toBeGreaterThan(100);
+    expect(s).toContain('major');
+    expect(s).toContain('minor');
+    expect(s).toContain('phrygian');
+    expect(s).toContain('Kanakangi');
   });
 
   it('returns the notes of C4 major', () => {
@@ -43,6 +49,38 @@ describe('scales', () => {
   });
 });
 
+describe('scales with non-C root notes', () => {
+  it('returns the notes of D4 major', () => {
+    expect(scale('D4 major')).toStrictEqual([
+      'D4', 'E4', 'Gb4', 'G4', 'A4', 'B4', 'Db5',
+    ]);
+  });
+
+  it('returns the notes of A4 minor', () => {
+    expect(scale('A4 minor')).toStrictEqual([
+      'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5',
+    ]);
+  });
+
+  it('returns the notes of Db4 major', () => {
+    expect(scale('Db4 major')).toStrictEqual([
+      'Db4', 'Eb4', 'F4', 'Gb4', 'Ab4', 'Bb4', 'C5',
+    ]);
+  });
+});
+
+describe('default octave', () => {
+  it('defaults to octave 4 when no octave is specified for scale', () => {
+    expect(scale('C major')).toStrictEqual([
+      'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4',
+    ]);
+  });
+
+  it('defaults to octave 4 when no octave is specified for chord', () => {
+    expect(chord('C M')).toStrictEqual(['C4', 'E4', 'G4']);
+  });
+});
+
 describe('sharps and flats', () => {
   it('accepts sharps', () => {
     expect(scale('C#4 major')).toStrictEqual([
@@ -67,7 +105,12 @@ describe('sharps and flats', () => {
 
 describe('chords', () => {
   it('returns a list of available chords', () => {
-    expect(Array.isArray(chords())).toBe(true);
+    const c = chords();
+    expect(Array.isArray(c)).toBe(true);
+    expect(c.length).toBeGreaterThan(50);
+    expect(c).toContain('M');
+    expect(c).toContain('m');
+    expect(c).toContain('maj7');
   });
 
   it('returns the notes of a chord', () => {
@@ -83,11 +126,33 @@ describe('chords', () => {
   });
 });
 
+describe('melakarta ragas', () => {
+  it('returns the notes of C4 Kanakangi', () => {
+    expect(scale('C4 Kanakangi')).toStrictEqual([
+      'C4', 'Db4', 'D4', 'F4', 'G4', 'Ab4', 'A4',
+    ]);
+  });
+
+  it('returns the notes of C4 Mechakalyani', () => {
+    expect(scale('C4 Mechakalyani')).toStrictEqual([
+      'C4', 'D4', 'E4', 'Gb4', 'G4', 'A4', 'B4',
+    ]);
+  });
+});
+
 describe('inlineChord', () => {
   it('returns the notes for an inline chord', () => {
     expect(inlineChord('CM')).toStrictEqual(['C4', 'E4', 'G4']);
     expect(inlineChord('CM_5')).toStrictEqual(['C5', 'E5', 'G5']);
     expect(inlineChord('Cmaj7_5')).toStrictEqual(['C5', 'E5', 'G5', 'B5']);
+  });
+
+  it('returns the notes for an inline chord with flat', () => {
+    expect(inlineChord('DbM')).toStrictEqual(['Db4', 'F4', 'Ab4']);
+  });
+
+  it('returns the notes for an inline chord with sharp and octave', () => {
+    expect(inlineChord('C#m_5')).toStrictEqual(['Db5', 'E5', 'Ab5']);
   });
 });
 
