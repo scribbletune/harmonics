@@ -3,10 +3,13 @@
  * These are to be consumed by the exported Node module
  */
 
+const path = require('path');
 const fs = require('fs');
 const { Scale, Chord, ChordType } = require('@tonaljs/tonal');
-const svara = require('./svara.json');
-const melakarta = require('./melakarta.json');
+const svara = require('./data/svara.json');
+const melakarta = require('./data/melakarta.json');
+
+const GEN_DIR = path.join(__dirname, '..', 'src', 'gen');
 
 /**
  *
@@ -58,7 +61,7 @@ Object.keys(melakarta).forEach(m => {
   })
 });
 
-fs.writeFile('./gen/scaleMaps.json', JSON.stringify(scaleMaps), function (err) {
+fs.writeFile(path.join(GEN_DIR, 'scaleMaps.json'), JSON.stringify(scaleMaps), function (err) {
   if (err) return console.log(err);
   console.log('Generated scaleMaps.json');
 });
@@ -74,7 +77,7 @@ ChordType.symbols().forEach((chord) => {
   chordMaps[chordName] = getBitmap({ chord });
 });
 
-fs.writeFile('./gen/chordMaps.json', JSON.stringify(chordMaps), function (err) {
+fs.writeFile(path.join(GEN_DIR, 'chordMaps.json'), JSON.stringify(chordMaps), function (err) {
   if (err) return console.log(err);
   console.log('Generated chordMaps.json');
 });
