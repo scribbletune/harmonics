@@ -2,26 +2,26 @@
   "name": "harmonics",
   "version": "1.1.1",
   "description": "Tools and utilities for a generic representation of scales, chords, progressions etc. for use in music software, music related web & mobile apps, VST/VCV plugins and Max for Live devices.",
-  "main": "main.js",
-  "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "build": "webpack --mode=production",
-    "watch:browser": "webpack --watch --mode=development",
-    "bump-major": "npm version major --no-git-tag-version",
-    "bump-minor": "npm version minor --no-git-tag-version",
-    "bump-patch": "npm version patch --no-git-tag-version"
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
   },
-  "dependencies": {},
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "prepublishOnly": "npm run build"
+  },
   "devDependencies": {
-    "@babel/core": "^7.13.16",
-    "@babel/preset-env": "^7.13.15",
-    "@tonaljs/tonal": "^4.6.0",
-    "babel-jest": "^26.6.3",
-    "babel-loader": "^8.2.2",
-    "jest": "^26.6.3",
-    "webpack": "^5.35.0",
-    "webpack-cli": "^4.6.0"
+    "@types/node": "^22.0.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
   },
   "repository": {
     "type": "git",

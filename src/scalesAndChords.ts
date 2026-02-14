@@ -1,25 +1,25 @@
-const scaleMaps = require('../gen/scaleMaps.json');
-const chordMaps = require('../gen/chordMaps.json');
+import scaleMaps from './gen/scaleMaps.json';
+import chordMaps from './gen/chordMaps.json';
 
 const DEFAULT_OCTAVE = 4;
 
-const sharpToFlat = (root) => {
-  // Also capitalize 1st letter
-  const o = {
-    'C#': 'Db',
-    'D#': 'Eb',
-    'F#': 'Gb',
-    'G#': 'Ab',
-    'A#': 'Bb',
-    'CB': 'B',
-    'FB': 'E',
-    'E#': 'F',
-    'B#': 'C',
-  };
-  return o[root.toUpperCase()] || (root.charAt(0).toUpperCase() + root.slice(1));
+const sharpToFlatMap: Record<string, string> = {
+  'C#': 'Db',
+  'D#': 'Eb',
+  'F#': 'Gb',
+  'G#': 'Ab',
+  'A#': 'Bb',
+  'CB': 'B',
+  'FB': 'E',
+  'E#': 'F',
+  'B#': 'C',
 };
 
-const CHROMATIC = [
+function sharpToFlat(root: string): string {
+  return sharpToFlatMap[root.toUpperCase()] || (root.charAt(0).toUpperCase() + root.slice(1));
+}
+
+const CHROMATIC: string[] = [
   'C',
   'Db',
   'D',
@@ -34,7 +34,7 @@ const CHROMATIC = [
   'B',
 ];
 
-const getChromatic = (root, octave) => {
+function getChromatic(root: string, octave: number): string[] {
   const index = CHROMATIC.indexOf(root);
   if (index === -1) {
     throw new Error(`${root} is not a valid root note`);
@@ -44,9 +44,17 @@ const getChromatic = (root, octave) => {
 
   const c = o1.concat(o2);
   return c.slice(index);
-};
+}
 
-const _getNotesForScaleOrChord = ({ scale, chord }) => {
+interface ScaleOrChordOptions {
+  scale?: string;
+  chord?: string;
+}
+
+const scaleMap = scaleMaps as Record<string, string>;
+const chordMap = chordMaps as Record<string, string>;
+
+function _getNotesForScaleOrChord({ scale, chord }: ScaleOrChordOptions): string[] {
   const input = scale || chord;
   const SCALE_OR_CHORD = scale ? 'scale' : 'chord';
   if (typeof input !== 'string') {
@@ -54,8 +62,8 @@ const _getNotesForScaleOrChord = ({ scale, chord }) => {
   }
   const rootOctaveScale = input.trim();
   const indexOfFirstSpace = rootOctaveScale.indexOf(' ');
-  let scaleOrChord;
-  let rootOctave;
+  let scaleOrChord: string;
+  let rootOctave: string;
   if (indexOfFirstSpace === -1) {
     scaleOrChord = rootOctaveScale.slice(1);
     rootOctave = rootOctaveScale[0];
@@ -65,7 +73,7 @@ const _getNotesForScaleOrChord = ({ scale, chord }) => {
       rootOctave += rootOctaveScale[1];
     }
   } else {
-    scaleOrChord = rootOctaveScale.slice( (indexOfFirstSpace === -1) ? 1 : (indexOfFirstSpace + 1) );
+    scaleOrChord = rootOctaveScale.slice(indexOfFirstSpace === -1 ? 1 : indexOfFirstSpace + 1);
     rootOctave = rootOctaveScale.slice(0, indexOfFirstSpace);
   }
   const root = sharpToFlat(rootOctave.replace(/\d/g, ''));
@@ -76,15 +84,15 @@ const _getNotesForScaleOrChord = ({ scale, chord }) => {
     throw new Error(`${rootOctave[0]} does not have a valid octave`);
   }
 
-  if (!scaleMaps[scaleOrChord] && !chordMaps[scaleOrChord]) {
+  if (!scaleMap[scaleOrChord] && !chordMap[scaleOrChord]) {
     throw new Error(`${rootOctaveScale} is not a valid ${SCALE_OR_CHORD}`);
   }
   const chroma = getChromatic(root, octave);
-  const acc = [];
+  const acc: string[] = [];
   let p1 = 0,
     p2 = 0;
 
-  const map = scale ? scaleMaps : chordMaps;
+  const map = scale ? scaleMap : chordMap;
 
   while (p1 < map[scaleOrChord].length) {
     if (map[scaleOrChord][p1] === '1') {
@@ -95,7 +103,7 @@ const _getNotesForScaleOrChord = ({ scale, chord }) => {
   }
 
   return acc;
-};
+}
 
 /**
  *
@@ -104,13 +112,13 @@ const _getNotesForScaleOrChord = ({ scale, chord }) => {
  * Take an inline chord such as CM or Csus4_3 and return an array of it's notes
  * Used in Scribbletune to allow adding chords inline with notes
  */
-export const inlineChord = (rootChord_Oct) => {
+export function inlineChord(rootChord_Oct: string): string[] {
   // only b9sus is a chord that starts with a `b` which can be confused with a flat
   // hence isolate it explicitly
   const B9SUS = 'b9sus';
-  let root,
-    chord,
-    octave = DEFAULT_OCTAVE;
+  let root: string,
+    chord: string,
+    octave: number = DEFAULT_OCTAVE;
   if (rootChord_Oct.includes(B9SUS)) {
     chord = B9SUS;
     root = rootChord_Oct.slice(0, rootChord_Oct.indexOf(B9SUS));
@@ -131,27 +139,38 @@ export const inlineChord = (rootChord_Oct) => {
   }
 
   return _getNotesForScaleOrChord({ chord: root + octave + ' ' + chord });
-};
+}
 
-export const chords = () => Object.keys(chordMaps);
-export const scales = () => Object.keys(scaleMaps);
-export const chord = (chord) => _getNotesForScaleOrChord({ chord });
-export const scale = (scale) => _getNotesForScaleOrChord({ scale });
+export function chords(): string[] {
+  return Object.keys(chordMap);
+}
+
+export function scales(): string[] {
+  return Object.keys(scaleMap);
+}
+
+export function chord(chord: string): string[] {
+  return _getNotesForScaleOrChord({ chord });
+}
+
+export function scale(scale: string): string[] {
+  return _getNotesForScaleOrChord({ scale });
+}
 
 /**
- * 
+ *
  * @param {String} scaleOrBitmap e.g '110010110011' or 'phrygian'
  * @returns {Array} e.g. [0, 1,  3,  5, 7, 8, 10, 12]
  */
-export const getIndicesFromScale = (scaleOrBitmap) => {
-  let str = scaleMaps[scaleOrBitmap] || scaleOrBitmap;
-  const intervals = [];
-	for (let i = 0; i < str.length; i++) {
-		if (str[i] === '1') {
-			intervals.push(i);
-		}
-	}
+export function getIndicesFromScale(scaleOrBitmap: string): number[] {
+  const str = scaleMap[scaleOrBitmap] || scaleOrBitmap;
+  const intervals: number[] = [];
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === '1') {
+      intervals.push(i);
+    }
+  }
 
-	intervals.push(12); // Add the next octave
-	return intervals;
-};
+  intervals.push(12); // Add the next octave
+  return intervals;
+}
